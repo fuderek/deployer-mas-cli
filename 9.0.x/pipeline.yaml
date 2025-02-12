@@ -10,7 +10,7 @@ spec:
   params:
     - name: mas-instance-id
       type: string
-      default: "inst1"
+      default: "mas9"
     - name: mas-workspace-id
       type: string
       default: "masdev"
@@ -21,11 +21,11 @@ spec:
     - name: mas-cp4d-version
       type: string
       description: "Supported CP4D version for MAS on OpenShift"
-      default: "4.8.0"
+      default: "5.1.0"
     - name: mas-install-manage
       type: string
       description: "controls whether Maximo Manage and CP4D is installed"
-      default: "true"
+      default: "false"
     - name: mas-cp4d-install-cognos
       type: string
       default: "false"
@@ -88,7 +88,7 @@ spec:
     - name: "mas-catalog-version"
       description: "Maximo operator catalog version. Check https://ibm-mas.github.io/cli/catalogs/"
       type: string
-      default: v9-241205-amd64
+      default: v9-250206-amd64
     - name: mas-channel
       description: "channel to subscribe to"
       type: string
@@ -96,11 +96,11 @@ spec:
     - name: cpd-platform-services
       type: string
       description: "Install CP4D, including WS, WML, OpenScale, Spark in the cluster"
-      default: "true"
+      default: "false"
     - name: cpd-install-spss
       type: string
       description: "Install SPSS in the cluster"
-      default: "true"
+      default: "false"
     - name: cpd-wsl-projectname
       type: string
       description: "Watson Studio Project Name"
@@ -397,7 +397,7 @@ spec:
               export IBM_ENTITLEMENT_KEY=$(cat $(workspaces.ws.path)/ek.dat)
               export MAS_ENTITLEMENT_KEY=$(cat $(workspaces.ws.path)/ek.dat)
               export MAS_INSTANCE_ID=$(params.mas-instance-id)
-              export MAS_ WORKSPACE_ID=$(params.mas-workspace-id)
+              export MAS_WORKSPACE_ID=$(params.mas-workspace-id)
               export MAS_CONFIG_DIR=$(workspaces.ws.path)/masconfig
               export MAS_MANUAL_CERT_MGMT=True
               export MAS_CATALOG_VERSION=$(params.mas-catalog-version)
@@ -500,7 +500,7 @@ spec:
               #export DB2_MEMORY_REQUESTS=10Gi
               #export DB2_MEMORY_LIMITS=20Gi
 
-              export CPD_INSTALL_PLATFORM="true"
+              export CPD_INSTALL_PLATFORM=$(params.cpd-platform-services)
               export CPD_INSTALL_COGNOS=$(params.mas-cp4d-install-cognos)
               export CPD_PRODUCT_VERSION=$(params.mas-cp4d-version) 
               export CPD_PRIMARY_STORAGE_CLASS=$(params.rwx-storageclass)
@@ -568,10 +568,10 @@ spec:
               export MAS_CATALOG_VERSION=$(params.mas-catalog-version)
               export MAS_CHANNEL=$(params.mas-channel)
 
-              export DB2_INSTANCE_NAME=db2wh-manage
+              export DB2_INSTANCE_NAME=manage-db2u
               export DB2_ENTITLEMENT_KEY=$(cat $(workspaces.ws.path)/ek.dat)
               export DB2_DBNAME=BLUDB
-              export DB2_NODE_LABEL=db2wh
+              export DB2_NODE_LABEL=db2u
               export DB2_META_STORAGE_CLASS=$(params.rwx-storageclass)
               export DB2_META_STORAGE_SIZE=100Gi
               export DB2_META_STORAGE_ACCESSMODE=ReadWriteMany
@@ -589,7 +589,7 @@ spec:
               #export DB2_MEMORY_REQUESTS=10Gi
               #export DB2_MEMORY_LIMITS=20Gi
 
-              export CPD_INSTALL_PLATFORM="true"
+              export CPD_INSTALL_PLATFORM=$(params.cpd-platform-services)
               export CPD_INSTALL_COGNOS=$(params.mas-cp4d-install-cognos)
               export CPD_PRODUCT_VERSION=$(params.mas-cp4d-version) 
               export CPD_PRIMARY_STORAGE_CLASS=$(params.rwx-storageclass)
@@ -988,7 +988,7 @@ spec:
               export MAS_CATALOG_VERSION=$(params.mas-catalog-version)
               export MAS_CHANNEL=$(params.mas-channel)
 
-              export DB2_INSTANCE_NAME=db2wh-manage
+              export DB2_INSTANCE_NAME=manage-db2u
               export DB2_ENTITLEMENT_KEY=$(cat $(workspaces.ws.path)/ek.dat)
               export DB2_DBNAME=BLUDB
               export DB2_NODE_LABEL=db2wh
@@ -1011,17 +1011,17 @@ spec:
 
               export MAS_APP_SETTINGS_PERSISTENT_VOLUMES_FLAG=true
               export MAS_APP_SETTINGS_BASE_LANG=EN
-              export MAS_APP_SETTINGS_SECONDARY_LANGS='DE'
+              export MAS_APP_SETTINGS_SECONDARY_LANGS='ES'
               export MAS_APP_SETTINGS_SERVER_BUNDLES_SIZE=jms
               export MAS_MANAGE_ATTACHMENTS_PROVIDER=filestorage
               export MAS_APP_SETTINGS_ATTACHMENTS_MOUNT_PATH=/DOCLINKS
               export MANAGE_AIO_FLAG=false
               export MAS_APP_ID=manage
 
-              export MAS_APPWS_COMPONENTS="base=latest,health=latest"
+              export MAS_APPWS_COMPONENTS="base=latest"
               export MAS_APP_SETTINGS_DEMODATA=$(params.install-demo-data)
 
-              export CPD_INSTALL_PLATFORM="true"
+              export CPD_INSTALL_PLATFORM=$(params.cpd-platform-services)
               export CPD_INSTALL_COGNOS=$(params.mas-cp4d-install-cognos)
               export CPD_PRODUCT_VERSION=$(params.mas-cp4d-version) 
               export CPD_PRIMARY_STORAGE_CLASS=$(params.rwx-storageclass)
